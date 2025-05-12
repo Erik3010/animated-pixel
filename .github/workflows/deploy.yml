@@ -34,6 +34,14 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Debug build output
+        run: |
+          echo "Workspace root:"
+          ls -R .
+          echo "---"
+          echo "Contents of dist/:"
+          ls -R dist || echo "dist/ does not exist!"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
