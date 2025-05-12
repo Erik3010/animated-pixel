@@ -112,14 +112,10 @@ class AnimatedPixel {
 
     this.animationPhase = (this.animationPhase + 1) % 2;
   }
-
   render() {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    this.ctx.clearRect(0, 0, this.width, this.height);
 
-    for (let square of this.squares) {
-      square.render();
-    }
-
+    for (let square of this.squares) square.render();
     this.animateSquares();
 
     requestAnimationFrame(this.render.bind(this));
