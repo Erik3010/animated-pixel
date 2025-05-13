@@ -1,5 +1,5 @@
 import { SquareOptions } from "../types";
-import { animate, sleep } from "../utils";
+import { animate, waitForAnimationDelay } from "../utils";
 
 class Square {
   ctx: CanvasRenderingContext2D;
@@ -30,7 +30,7 @@ class Square {
   async animate({ isReverse = false, delay = 0 } = {}) {
     this.isAnimating = true;
 
-    if (delay > 0) await sleep(delay);
+    if (delay > 0) await waitForAnimationDelay(delay);
     await animate<{ width: number }>({
       initialValues: { width: isReverse ? this.size : 0 },
       targetValues: { width: isReverse ? 0 : this.size },

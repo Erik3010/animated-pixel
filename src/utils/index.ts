@@ -20,8 +20,20 @@ export const random = (min: number, max: number) =>
 
 export const toRadian = (degree: number) => degree * (Math.PI / 180);
 
-export const sleep = (ms: number) =>
-  new Promise((resolve) => setTimeout(resolve, ms));
+export const waitForAnimationDelay = (delayMs: number) => {
+  return new Promise<void>((resolve) => {
+    const startTime = performance.now();
+
+    const onFrame = () => {
+      const elapsed = performance.now() - startTime;
+      if (elapsed > delayMs) {
+        return resolve();
+      }
+      requestAnimationFrame(onFrame);
+    };
+    requestAnimationFrame(onFrame);
+  });
+};
 
 export const lerp = (start: number, end: number, progress: number) =>
   start + (end - start) * progress;
@@ -43,6 +55,7 @@ export const animate = <T extends Record<string, number>>({
       const interpolation = elapsedTime / duration;
 
       if (interpolation >= 1) {
+        onUpdate(targetValues);
         return resolve(true);
       }
 
